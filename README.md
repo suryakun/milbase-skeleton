@@ -1,4 +1,6 @@
-# Milbase
+<<<<<<< HEAD
+# Milbase-skeleton
+Skeleton project with Elixir phoenix, Absinthe Graphql
 
 To start your Phoenix server:
 
