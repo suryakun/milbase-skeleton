@@ -3,6 +3,8 @@ defmodule MilbaseWeb.Resolvers.UserResolver do
   alias Absinthe.Relay.Connection
   alias Milbase.Account.User
   alias Milbase.Account
+  import AbsintheErrorPayload.Payload
+  import AbsintheErrorPayload.ChangesetParser
 
   def users(pagination_arg, %{context: context}) do
     IO.inspect pagination_arg
@@ -13,8 +15,11 @@ defmodule MilbaseWeb.Resolvers.UserResolver do
     #{:ok, Account.list_users()}
   end
 
-  def register_user(_, %{input: input}, _) do
-    Account.create_user(input)
+  def register_user(%{input: input}, _) do
+    case Account.create_user(input) do
+      {:ok, user} -> {:ok, success_payload(user)}
+      {:error, %Ecto.Changeset{} = changeset} -> {:ok, changeset |> extract_messages() |> error_payload() }
+    end
   end
   
 end

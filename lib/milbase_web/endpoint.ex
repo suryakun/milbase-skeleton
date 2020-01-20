@@ -1,4 +1,5 @@
 defmodule MilbaseWeb.Endpoint do
+  use Absinthe.Phoenix.Endpoint, schema: MilbaseWeb.Schema
   use Phoenix.Endpoint, otp_app: :milbase
 
   socket "/socket", MilbaseWeb.UserSocket,

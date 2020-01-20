@@ -3,10 +3,14 @@ defmodule MilbaseWeb.Schema do
   use Absinthe.Relay.Schema, :modern
   alias MilbaseWeb.Resolvers
   alias MilbaseWeb.Schema.Middleware
+  import AbsintheErrorPayload.Payload
 
   import_types MilbaseWeb.Schema.Types
+  import_types AbsintheErrorPayload.ValidationMessageTypes
 
   connection node_type: :user_type
+  payload_object(:user_payload, :user_type)
+
   query do
     @desc "Get all users"
     connection field :users, node_type: :user_type do
@@ -29,9 +33,9 @@ defmodule MilbaseWeb.Schema do
 
   mutation do
     @desc "Register a new user"
-    field :register_user, type: :user_type do
+    field :register_user, type: :user_payload, description: "register new user" do
       arg(:input, non_null(:user_input_type))
-      resolve &Resolvers.UserResolver.register_user/3
+      resolve &Resolvers.UserResolver.register_user/2
     end
 
     @desc "Login user"

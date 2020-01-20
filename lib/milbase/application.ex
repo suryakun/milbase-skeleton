@@ -6,14 +6,16 @@ defmodule Milbase.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       Milbase.Repo,
       # Start the endpoint when the application starts
-      MilbaseWeb.Endpoint
+      MilbaseWeb.Endpoint,
       # Starts a worker by calling: Milbase.Worker.start_link(arg)
       # {Milbase.Worker, arg},
+      supervisor(Absinthe.Subscription, [MilbaseWeb.Endpoint])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

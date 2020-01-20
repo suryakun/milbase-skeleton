@@ -1,5 +1,7 @@
 defmodule MilbaseWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: MilbaseWeb.Schema
+  alias Milbase.Account.User
 
   ## Channels
   # channel "room:*", MilbaseWeb.RoomChannel
@@ -15,9 +17,14 @@ defmodule MilbaseWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket, _connect_info) do
+  def connect(params, socket, _connect_info) do
+    IO.puts params
+    current_user = current_user(params)
+    socket = Absinthe.Phoenix.Socket.put_options(socket, context: %{current_user: current_user})
     {:ok, socket}
   end
+
+  defp current_user(%{"user_id" => id}), do: Milbase.Repo.get(User, id)
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
