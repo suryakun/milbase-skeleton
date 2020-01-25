@@ -15,7 +15,7 @@ defmodule Milbase.Application do
       MilbaseWeb.Endpoint,
       # Starts a worker by calling: Milbase.Worker.start_link(arg)
       # {Milbase.Worker, arg},
-      supervisor(Absinthe.Subscription, [MilbaseWeb.Endpoint])
+      supervisor(Absinthe.Subscription, [MilbaseWeb.Endpoint]),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

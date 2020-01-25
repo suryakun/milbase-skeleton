@@ -25,9 +25,13 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :milbase, MilbaseWeb.Gettext, default_locale: "id_ID", locales: ~w(en id_ID)
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
 config :milbase, Milbase.Guardian,
        issuer: "milbase",
        secret_key: "4jIl9bOnQnpM3TA1J1RyQJlfUYpi+C0bVbFDyyXJn7VuxawT68WycaBY7jwx1u/b"
+
+

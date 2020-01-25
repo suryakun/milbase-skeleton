@@ -20,7 +20,7 @@ defmodule Milbase.MixProject do
   def application do
     [
       mod: {Milbase.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :set_locale]
     ]
   end
 
@@ -50,7 +50,8 @@ defmodule Milbase.MixProject do
       {:guardian, "~> 2.0"},
       {:cors_plug, "~> 1.5"},
       {:absinthe_relay, "~> 1.4.6"},
-      {:absinthe_error_payload, "~> 1.0.0"}
+      {:absinthe_error_payload, "~> 1.0.0"},
+      {:set_locale, "~> 0.2.1"},
     ]
   end
 

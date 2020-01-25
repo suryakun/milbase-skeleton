@@ -1,4 +1,5 @@
 defmodule MilbaseWeb.ErrorHelpers do
+  alias AbsintheErrorPayload.ValidationMessage
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -29,5 +30,18 @@ defmodule MilbaseWeb.ErrorHelpers do
     else
       Gettext.dgettext(MilbaseWeb.Gettext, "errors", msg, opts)
     end
+  end
+
+  @spec validate_translate([%ValidationMessage{}]) :: [%ValidationMessage{}]
+  def validate_translate(messages) do
+    Enum.map(messages, &translate_validation/1)
+  end
+
+  defp translate_validation(%ValidationMessage{options: [count: count] = options, message: message} = err) do
+      %ValidationMessage{err | message: Gettext.dngettext(MilbaseWeb.Gettext, "errors", message, message, count, options)}
+  end
+
+  defp translate_validation(%ValidationMessage{options: options, message: message} = err) do
+      %ValidationMessage{err | message: Gettext.dgettext(MilbaseWeb.Gettext, "errors", message, options)}
   end
 end

@@ -5,6 +5,7 @@ defmodule MilbaseWeb.Router do
     plug CORSPlug, origin: "http://localhost:3000"
     plug :accepts, ["json"]
     plug MilbaseWeb.Plugs.Context
+    #plug SetLocale, gettext: MilbaseWeb.Gettext, default_locale: "id_ID"
   end
 
   scope "/api" do
