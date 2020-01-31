@@ -20,7 +20,6 @@ defmodule MilbaseWeb.Resolvers.UserResolver do
     case Account.create_user(input) do
       {:ok, user} -> {:ok, success_payload(user)}
       {:error, %Ecto.Changeset{} = changeset} -> 
-        IO.inspect extract_messages(changeset)
         {:ok, changeset 
         |> extract_messages() 
         |> Helper.validate_translate()

@@ -14,7 +14,7 @@ defmodule MilbaseWeb.Schema do
   query do
     @desc "Get all users"
     connection field :users, node_type: :user_type do
-      middleware(Middleware.Authorize, :any)
+      #middleware(Middleware.Authorize, :any)
       resolve &Resolvers.UserResolver.users/2
     end
 
@@ -54,6 +54,27 @@ defmodule MilbaseWeb.Schema do
     field :create_comment, type: :comment_type do
       arg(:input, non_null(:comment_input_type))
       resolve &Resolvers.CommentResolver.create_comment/3
+    end
+  end
+
+  subscription do 
+    field :comment_added, :comment_type do
+      arg :input, non_null(:comment_input_type)
+
+      config fn args, _ -> 
+        IO.inspect args.input, label: "argumen topik"
+        {:ok, topic: args.input.text}
+      end
+
+      trigger :create_comment, topic: fn comment ->
+        IO.inspect comment, label: "Data trigger"
+        comment.text
+      end
+
+      resolve fn comment, _, _ ->
+        IO.inspect comment, label: "RETURN"
+        {:ok, comment}
+      end
     end
   end
 end
