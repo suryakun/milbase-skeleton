@@ -3,9 +3,9 @@ defmodule MilbaseWeb.Resolvers.UserResolver do
   alias Absinthe.Relay.Connection
   alias Milbase.Account.User
   alias Milbase.Account
+  alias MilbaseWeb.ErrorHelpers, as: Helper
   import AbsintheErrorPayload.Payload
   import AbsintheErrorPayload.ChangesetParser
-  alias MilbaseWeb.ErrorHelpers, as: Helper
 
   def users(pagination_arg, %{context: context}) do
     IO.inspect pagination_arg

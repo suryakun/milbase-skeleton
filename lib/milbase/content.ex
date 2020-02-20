@@ -9,6 +9,18 @@ defmodule Milbase.Content do
   alias Milbase.Content.Post
 
   @doc """
+  Data source for dataloader library
+  """
+  def data(), do: Dataloader.Ecto.new(Milbase.Repo, query: &query/2)
+
+  @doc """
+  Data query for dataloader library
+  """
+  def query(queryable, _params) do
+    queryable
+  end
+
+  @doc """
   Returns the list of posts.
 
   ## Examples

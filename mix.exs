@@ -52,6 +52,7 @@ defmodule Milbase.MixProject do
       {:absinthe_relay, "~> 1.4.6"},
       {:absinthe_error_payload, "~> 1.0.0"},
       {:set_locale, "~> 0.2.1"},
+      {:dataloader, "~> 1.0.0"}
     ]
   end
 

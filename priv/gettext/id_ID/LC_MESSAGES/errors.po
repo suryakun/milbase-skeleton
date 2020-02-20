@@ -79,3 +79,6 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+msgid "Incorrect user credential"
+msgstr "Opps, kamu belum bikin akun atau passwordmu salah"

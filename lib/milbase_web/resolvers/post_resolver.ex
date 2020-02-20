@@ -1,5 +1,6 @@
 defmodule MilbaseWeb.Resolvers.PostResolver do
   alias Milbase.Content
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   
   def posts(_, _, _) do
     {:ok, Content.list_posts()}

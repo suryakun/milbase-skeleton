@@ -10,6 +10,7 @@ defmodule MilbaseWeb.Schema.Types.UserType do
     field :last_name, :string, description: "optional last name"
     field :email, :string, description: "Required email"
     field :role, :string, description: "Role"
+    field :inserted_at, :string, description: "Inserted at"
 
     # Uncomment this if you want to populate the posts without pagination
     #field :posts, list_of(:post_type), resolve: assoc(:posts)

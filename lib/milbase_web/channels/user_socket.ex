@@ -18,6 +18,7 @@ defmodule MilbaseWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket, _connect_info) do
+    IO.inspect params, label: "parameter socket"
     socket = Absinthe.Phoenix.Socket.put_options(socket, context: %{current_user: "test"})
     {:ok, socket}
   end
