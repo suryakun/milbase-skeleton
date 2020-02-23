@@ -6,7 +6,7 @@ Project skeleton built with Elixir, Phoenix framework and Absinthe Graphql
 ## Getting Started
 
 Graphql is awesome, elixir is awesome too. How to combine these two things? This skeleton created as a template for you who wants to create a server app with elixir and graphql. As a template placeholder, this  
-skeleton contains a classic user-post-comment schema which a user have many posts and a post have many comments.
+skeleton contains a classic user-post-comment schema which a user has many posts and a post has many comments.
 
 ### Prerequisites
 
