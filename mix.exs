@@ -43,7 +43,7 @@ defmodule Milbase.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:comeonin, "~> 4.1.2"},
       {:argon2_elixir, "~> 1.2.2"},
-      {:absinthe, "~> 1.4"},
+      {:absinthe, "~> 1.4.13"},
       {:absinthe_plug, "~> 1.4"},
       {:absinthe_ecto, "~> 0.1.3"},
       {:absinthe_phoenix, "~> 1.4.0"},
