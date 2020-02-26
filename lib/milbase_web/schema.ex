@@ -43,6 +43,9 @@ defmodule MilbaseWeb.Schema do
 
     @desc "Create comment"
     import_fields :comment_mutations
+
+    @desc "Send email reset token"
+    import_fields :reset_mutations
   end
 
   subscription do 

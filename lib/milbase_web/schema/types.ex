@@ -7,6 +7,7 @@ defmodule MilbaseWeb.Schema.Types do
   import_types Types.SessionType
   import_types Types.PostType
   import_types Types.CommentType
+  import_types Types.ResetType
 
   #Import queries
   import_types MilbaseWeb.Schema.Query.UserQuery
@@ -18,6 +19,7 @@ defmodule MilbaseWeb.Schema.Types do
   import_types MilbaseWeb.Schema.Mutation.SessionMutation
   import_types MilbaseWeb.Schema.Mutation.PostMutation
   import_types MilbaseWeb.Schema.Mutation.CommentMutation
+  import_types MilbaseWeb.Schema.Mutation.ResetMutation
 
   #import subscriptions
   import_types MilbaseWeb.Schema.Subscription.CommentSubscription
