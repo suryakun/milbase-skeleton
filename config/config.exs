@@ -34,4 +34,5 @@ config :milbase, Milbase.Guardian,
        issuer: "milbase",
        secret_key: "4jIl9bOnQnpM3TA1J1RyQJlfUYpi+C0bVbFDyyXJn7VuxawT68WycaBY7jwx1u/b"
 
-
+config :milbase, Milbase.Mailer,
+       adapter: Bamboo.LocalAdapter

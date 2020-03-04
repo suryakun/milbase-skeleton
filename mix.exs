@@ -20,7 +20,7 @@ defmodule Milbase.MixProject do
   def application do
     [
       mod: {Milbase.Application, []},
-      extra_applications: [:logger, :runtime_tools, :set_locale]
+      extra_applications: [:logger, :runtime_tools, :set_locale, :bamboo, :bamboo_smtp]
     ]
   end
 
@@ -52,7 +52,9 @@ defmodule Milbase.MixProject do
       {:absinthe_relay, "~> 1.4.6"},
       {:absinthe_error_payload, "~> 1.0.0"},
       {:set_locale, "~> 0.2.1"},
-      {:dataloader, "~> 1.0.0"}
+      {:dataloader, "~> 1.0.0"},
+      {:bamboo, "~> 1.4"},
+      {:bamboo_smtp, "~> 2.1.0"}
     ]
   end
 
