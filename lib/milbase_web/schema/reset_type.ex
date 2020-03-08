@@ -3,6 +3,7 @@ defmodule MilbaseWeb.Schema.Types.ResetType do
 
   object :reset_token_type do
     field :token, :string
+    field :email, :string
   end
 
   input_object :reset_input_type do

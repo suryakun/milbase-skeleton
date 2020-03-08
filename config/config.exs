@@ -35,4 +35,14 @@ config :milbase, Milbase.Guardian,
        secret_key: "4jIl9bOnQnpM3TA1J1RyQJlfUYpi+C0bVbFDyyXJn7VuxawT68WycaBY7jwx1u/b"
 
 config :milbase, Milbase.Mailer,
-       adapter: Bamboo.LocalAdapter
+       adapter: Bamboo.SMTPAdapter,
+       server: "smtp.gmail.com",
+       port: 587,
+       username: System.get_env("EMAIL_USERNAME"),
+       password: System.get_env("EMAIL_PASSWORD"),
+       tls: :if_available,
+       allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"],
+       ssl: false,
+       retries: 1
+
+

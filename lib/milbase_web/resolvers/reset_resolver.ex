@@ -10,8 +10,8 @@ defmodule MilbaseWeb.Resolvers.ResetResolver do
     query = from u in User, where: u.email == ^input.email, select: u
     with user <- Repo.one(query),
          {:ok, jwt_token, _} <- Guardian.encode_and_sign(user) do
-      Email.welcome_email |> Mailer.deliver_now()
-      {:ok, success_payload(%{token: jwt_token})}
+      {"surya.surakhman@gmail.com", jwt_token} |> Email.reset_token |> Mailer.deliver_now()
+      {:ok, success_payload(%{token: jwt_token, email: user.email})}
     else
       {:error, message} -> {:ok, [%ValidationMessage{field: "reset", code: "RESET001", message: "Cannot find your email"}]
       |> Helper.validate_translate()
