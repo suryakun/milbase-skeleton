@@ -1,5 +1,5 @@
 defmodule MilbaseWeb.Resolvers.ResetResolver do
-  alias Milbase.{Repo, Guardian, Email, Mailer}
+  alias Milbase.{Account, Guardian, Email, Mailer}
   alias MilbaseWeb.ErrorHelpers, as: Helper
   alias AbsintheErrorPayload.ValidationMessage
   alias Milbase.Account.User
@@ -7,11 +7,20 @@ defmodule MilbaseWeb.Resolvers.ResetResolver do
   import Ecto.Query, only: [from: 2]
 
   def send_token(_, %{input: input}, _) do
-    query = from u in User, where: u.email == ^input.email, select: u
-    with user <- Repo.one(query),
+    with {:ok, user} <- Account.get_by_email(input.email),
          {:ok, jwt_token, _} <- Guardian.encode_and_sign(user) do
-      {"surya.surakhman@gmail.com", jwt_token} |> Email.reset_token |> Mailer.deliver_now()
-      {:ok, success_payload(%{token: jwt_token, email: user.email})}
+      try do
+        g = Gatka.hello
+        IO.inspect g
+        {user.email, jwt_token} |> Email.reset_token |> Mailer.deliver_now()
+        {:ok, success_payload(%{token: jwt_token, email: user.email})}
+      rescue
+        error in Bamboo.SMTPAdapter.SMTPError ->
+        {:ok, [%ValidationMessage{field: "reset", code: "RESET001", message: "Cannot send the email"}]
+        |> Helper.validate_translate()
+        |> error_payload()
+        }
+      end
     else
       {:error, message} -> {:ok, [%ValidationMessage{field: "reset", code: "RESET001", message: "Cannot find your email"}]
       |> Helper.validate_translate()

@@ -4,6 +4,10 @@ defmodule Milbase.MixProject do
   def project do
     [
       app: :milbase,
+      build_path: "../../_build",
+      #config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -54,7 +58,8 @@ defmodule Milbase.MixProject do
       {:set_locale, "~> 0.2.1"},
       {:dataloader, "~> 1.0.0"},
       {:bamboo, "~> 1.4"},
-      {:bamboo_smtp, "~> 2.1.0"}
+      {:bamboo_smtp, "~> 2.1.0"},
+      {:gatka, in_umbrella: true}
     ]
   end
 

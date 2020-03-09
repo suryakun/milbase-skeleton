@@ -12,7 +12,8 @@ defmodule Milbase.Email do
     )
   end
 
-  def reset_token({recipient, token} = params) do
+  def reset_token(args) do
+    {recipient, token} = args
     link = System.get_env("CLIENT_HOST") <> "reset_password?email=" <> recipient <> "&token=" <> token 
     new_email(
       to: recipient,

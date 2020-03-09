@@ -113,4 +113,18 @@ defmodule Milbase.Account do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  @doc """
+  Return an `%Ecto.Changeset{}` by user email
+  ## Example
+      iex> get_by_email(email)
+      iex> {:ok, %User{}}
+  """
+  def get_by_email(email) do
+    query = from u in User, where: u.email == ^email, select: u
+    case Repo.one(query) do
+      nil -> {:error, nil}
+      user -> {:ok, user}
+    end
+  end
 end
