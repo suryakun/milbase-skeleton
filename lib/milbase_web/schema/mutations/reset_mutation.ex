@@ -4,11 +4,19 @@ defmodule MilbaseWeb.Schema.Mutation.ResetMutation do
   alias MilbaseWeb.Resolvers
 
   payload_object(:reset_token_payload, :reset_token_type)
+  payload_object(:reset_verify_payload, :reset_verify_type)
 
   object :reset_mutations do
     field :send_token, type: :reset_token_payload do
       arg(:input, non_null(:reset_input_type))
       resolve &Resolvers.ResetResolver.send_token/3
+    end
+  end
+
+  object :reset_verify_mutations do
+    field :reset_verify, type: :reset_verify_payload do
+      arg(:input, non_null(:reset_verify_input_type))
+      resolve &Resolvers.ResetResolver.verify_token/3
     end
   end
 end

@@ -10,9 +10,8 @@ defmodule MilbaseWeb.Resolvers.ResetResolver do
     with {:ok, user} <- Account.get_by_email(input.email),
          {:ok, jwt_token, _} <- Guardian.encode_and_sign(user) do
       try do
-        g = Gatka.hello
-        IO.inspect g
         {user.email, jwt_token} |> Email.reset_token |> Mailer.deliver_now()
+        Gatka.store_token(user.email, jwt_token)
         {:ok, success_payload(%{token: jwt_token, email: user.email})}
       rescue
         error in Bamboo.SMTPAdapter.SMTPError ->
@@ -23,6 +22,18 @@ defmodule MilbaseWeb.Resolvers.ResetResolver do
       end
     else
       {:error, message} -> {:ok, [%ValidationMessage{field: "reset", code: "RESET001", message: "Cannot find your email"}]
+      |> Helper.validate_translate()
+      |> error_payload()
+      }
+    end
+  end
+
+  def verify_token(_, %{input: input}, _) do
+    with {:ok, user} <- Account.get_by_email(input.email),
+         {:ok, true} <- Gatka.check_token(user.email) do
+      {:ok, success_payload(%{token: input.token, email: input.email})}
+    else
+      {:error, message} -> {:ok, [%ValidationMessage{field: "unauthorized_reset", code: "RESET002", message: "Unauthorized token"}]
       |> Helper.validate_translate()
       |> error_payload()
       }
