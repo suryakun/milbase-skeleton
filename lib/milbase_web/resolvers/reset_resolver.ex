@@ -33,7 +33,29 @@ defmodule MilbaseWeb.Resolvers.ResetResolver do
          {:ok, true} <- Gatka.check_token(user.email) do
       {:ok, success_payload(%{token: input.token, email: input.email})}
     else
-      {:error, message} -> {:ok, [%ValidationMessage{field: "unauthorized_reset", code: "RESET002", message: "Unauthorized token"}]
+      {:error, _message} -> {:ok, [%ValidationMessage{field: "unauthorized_reset", code: "RESET002", message: "Unauthorized token"}]
+      |> Helper.validate_translate()
+      |> error_payload()
+      }
+    end
+  end
+
+  def reset_password(_, %{input: input}, _) do
+    with {:ok, token} <- Gatka.get_token(input.email),
+         {:ok, claims} <- Guardian.decode_and_verify(input.token),
+         {:ok, user} <- Guardian.resource_from_claims(claims),
+         {:ok, _key} <- Gatka.delete_token(user.email) do
+      if token == input.token do
+        {:ok, user} = Account.update_user(user, %{password: input.password, password_confirmation: input.password_confirmation})
+        {:ok, success_payload(%{email: user.email})}
+      else
+        {:ok, [%ValidationMessage{field: "invalid_token", code: "RESET004", message: "Invalid Token"}]
+        |> Helper.validate_translate()
+        |> error_payload()
+        }
+      end
+    else
+      {:error, _message} -> {:ok, [%ValidationMessage{field: "unauthorized_reset", code: "RESET003", message: "unauthorized token"}]
       |> Helper.validate_translate()
       |> error_payload()
       }

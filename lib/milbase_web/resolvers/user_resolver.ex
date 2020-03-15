@@ -26,5 +26,5 @@ defmodule MilbaseWeb.Resolvers.UserResolver do
         |> error_payload() }
     end
   end
-  
+
 end

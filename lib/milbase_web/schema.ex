@@ -49,6 +49,9 @@ defmodule MilbaseWeb.Schema do
 
     @desc "Verify reset token"
     import_fields :reset_verify_mutations
+
+    @desc "Update password"
+    import_fields :reset_password_mutations
   end
 
   subscription do 
